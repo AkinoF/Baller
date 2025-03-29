@@ -3,10 +3,13 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip; // Импортируем AudioClip
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+
+import java.io.File; // Импортируем File для работы с файлами
 
 public class Ball extends Application {
 
@@ -23,8 +26,14 @@ public class Ball extends Application {
     private Line bottomLine;
     private Line leftLine;
 
+    // Звуковой эффект
+    private AudioClip soundEffect;
+
     @Override
     public void start(Stage primaryStage) {
+        // Загружаем звуковой файл
+        soundEffect = new AudioClip(new File("path/to/your/sound.wav").toURI().toString());
+
         // Создаем линии ромба
         topLine = new Line(250.0, 150.0, 350.0, 250.0);
         rightLine = new Line(350.0, 250.0, 250.0, 350.0);
@@ -43,11 +52,12 @@ public class Ball extends Application {
 
         // Создаем кнопку для запуска анимации
         Button startButton = new Button("Start");
-        startButton.setLayoutX(170);
+        startButton.setLayoutX(350);
         startButton.setLayoutY(350);
         startButton.setOnAction(e -> {
             isFalling = true; // Устанавливаем флаг, чтобы начать падение
             ballSpeedY = 2; // Устанавливаем скорость падения
+            soundEffect.play(); // Воспроизводим звуковой эффект
         });
 
         // Создаем панель и добавляем линии, шар и кнопку
